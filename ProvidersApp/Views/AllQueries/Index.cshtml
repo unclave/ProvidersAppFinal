@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "Запросы";
+}
+@using (Html.BeginForm("Query1", "AllQueries", FormMethod.Post))
+{
+    <h3>Запрос 1</h3>
+    <p>Вывести ФИО абонента, его пол с датой рождения</p>
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Выполнить" class="btn btn-default" />
+        </div>
+    </div>
+}
+<br>
+<hr />
+@using (Html.BeginForm("Query2", "AllQueries", FormMethod.Post))
+{
+    <h3>Запрос 2</h3>
+    <p>Вывести сумму платежей для каждого абонента в отдельности</p>
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Выполнить" class="btn btn-default" />
+        </div>
+    </div>
+}
+<br>
+<hr />
+@using (Html.BeginForm("Query3", "AllQueries", FormMethod.Post))
+{
+    <h3>Запрос 3</h3>
+    <p>Вывести сумму платежей для периода с <input type="date" required name="date1" /> по <input type="date" required name="date2" /></p>
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Выполнить" class="btn btn-default" />
+        </div>
+    </div>
+}
+<br>
+<hr />
+@using (Html.BeginForm("Query4", "AllQueries", FormMethod.Post))
+{
+    <h3>Запрос 4</h3>
+    <p>Вывести ФИО операторов и их районов, абонентов и их районов в одном запросе</p>
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Выполнить" class="btn btn-default" />
+        </div>
+    </div>
+}
+<br>
+<hr />
+@using (Html.BeginForm("Query5", "AllQueries", FormMethod.Post))
+{
+    <h3>Запрос 5</h3>
+    <p>Вывести тариф с минимальной и максимальной стоимостью</p>
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Выполнить" class="btn btn-default" />
+        </div>
+    </div>
+}
+<br>
+<hr />
+@using (Html.BeginForm("Query6", "AllQueries", FormMethod.Post))
+{
+    <h3>Запрос 6</h3>
+    <p>Вывести подробную информацию по каждому абоненту</p>
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Выполнить" class="btn btn-default" />
+        </div>
+    </div>
+}
+<br>
+<hr />
+
+@using (Html.BeginForm("Query7", "AllQueries", FormMethod.Post))
+{
+    <h3>Запрос 7</h3>
+    <p>. Вывод номеров абонентов, их ФИО, подключенных с <input type="date" required name="date1" /> по <input type="date" required name="date2" /></p>
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Выполнить" class="btn btn-default" />
+        </div>
+    </div>
+}
+<br>
+<hr />
+@using (Html.BeginForm("Query8", "AllQueries", FormMethod.Post))
+{
+    <h3>Запрос 8</h3>
+    <p>Вывод номеров абонентов и даты их подключения</p>
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Выполнить" class="btn btn-default" />
+        </div>
+    </div>
+}
+<br>
+<hr />
+@using (Html.BeginForm("Query9", "AllQueries", FormMethod.Post))
+{
+    <h3>Запрос 9</h3>
+    <p>Суммарное количество клиентов, подключенных к каждому тарифу</p>
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Выполнить" class="btn btn-default" />
+        </div>
+    </div>
+}
+<br>
+<hr />
+@using (Html.BeginForm("Query10", "AllQueries", FormMethod.Post))
+{
+    <h3>Запрос 10</h3>
+    <p>Вывести ФИО абонентов с подключенным тарифом <input type="text" required name="name" /></p>
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Выполнить" class="btn btn-default" />
+        </div>
+    </div>
+}

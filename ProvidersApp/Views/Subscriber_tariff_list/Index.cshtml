@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ProvidersApp.Models.subscriber_tariff_list>
+
+@{
+    ViewBag.Title = "Список подключений абонентов";
+}
+
+@using (Html.BeginForm("Index", "Subscriber_tariff_list", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <label for="query">
+                <input type="text" name="search" class="form-control" />
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Найти" class="btn btn-default" />
+        </div>
+    </div>
+}
+<br>
+
+<p>
+    @Html.ActionLink("Создать запись", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Дата
+        </th>
+        <th>
+            ФИО абонента
+        </th>
+        <th>
+            Название тарифа
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.ActionLink(Html.DisplayFor(modelItem => item.subscribers.full_name).ToString(), "Details", "Subscribers", new { id = item.id_subscriber }, null)
+        </td>
+        <td>
+            @Html.ActionLink(Html.DisplayFor(modelItem => item.tariffs.name).ToString(), "Details", "Tariffs", new { id = item.id_tariff}, null)
+        </td>
+        <td>
+            @Html.ActionLink("Изменить", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Подробно", "Details", new { id=item.id }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

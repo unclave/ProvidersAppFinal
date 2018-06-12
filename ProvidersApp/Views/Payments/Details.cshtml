@@ -1,0 +1,41 @@
+﻿@model ProvidersApp.Models.payments
+
+@{
+    ViewBag.Title = "Подробно";
+}
+
+
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Дата
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            Сумма платежа
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.payment_value)
+        </dd>
+
+        <dt>
+            Код записи списка подключений
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.subscriber_tariff_list.id)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Вернуться к записям", "Index")
+</p>

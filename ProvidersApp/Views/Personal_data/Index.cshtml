@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ProvidersApp.Models.personal_data>
+
+@{
+    ViewBag.Title = "Персональные данные";
+}
+
+@using (Html.BeginForm("Index", "Personal_data", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <label for="query">
+                <input type="text" name="search" class="form-control" />
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Найти" class="btn btn-default" />
+        </div>
+    </div>
+}
+<br>
+
+<p>
+    @Html.ActionLink("Создать запись", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Адрес
+        </th>
+        <th>
+            Номер паспорта
+        </th>
+        <th>
+            День рождения
+        </th>
+        <th>
+            Пол
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.passport_info)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.birthday)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sex)
+        </td>
+        <td>
+            @Html.ActionLink("Изменить", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Подробно", "Details", new { id=item.id }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

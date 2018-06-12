@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ProvidersApp.Classes.Query5Data>
+
+@{
+    ViewBag.Title = "Результаты запроса";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            Название
+        </th>
+        <th>
+            Количество минут
+        </th>
+        <th>
+            Количество СМС
+        </th>
+        <th>
+            Цена
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @item.name
+        </td>
+        <td>
+            @item.minute_number
+        </td>
+        <td>
+            @item.sms_number
+        </td>
+        <td>
+            @item.price
+        </td>
+    </tr>
+    }
+</table>

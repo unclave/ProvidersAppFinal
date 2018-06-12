@@ -1,0 +1,26 @@
+﻿@model ProvidersApp.Models.regions
+
+@{
+    ViewBag.Title = "Подробно";
+}
+
+
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Название
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Вернуться к записям", "Index")
+</p>

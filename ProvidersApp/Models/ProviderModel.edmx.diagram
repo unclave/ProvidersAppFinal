@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b3f6d6ad1bfd45d78b5e7db2d4d08bfc" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="providersModel.operators" Width="1.5" PointX="2.875" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="providersModel.payments" Width="1.5" PointX="8.625" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="providersModel.personal_data" Width="1.5" PointX="4.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="providersModel.regions" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="providersModel.subscriber_tariff_list" Width="1.5" PointX="6.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="providersModel.subscribers" Width="1.5" PointX="4.875" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="providersModel.tariffs" Width="1.5" PointX="10.625" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="providersModel.operators_id_region_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="providersModel.payments_id_subscriber_tariff_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="providersModel.subscribers_id_personal_data_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="providersModel.subscribers_id_region_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="providersModel.subscriber_tarif_list_id_subscriber_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="providersModel.subscriber_tarif_list_id_tariff_fkey" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

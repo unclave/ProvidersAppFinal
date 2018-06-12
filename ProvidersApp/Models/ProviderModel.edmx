@@ -1,0 +1,490 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище providersModel" Provider="Npgsql" ProviderManifestToken="9.6.9" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="operators">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="full_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="experience" Type="int4" Nullable="false" />
+          <Property Name="salary" Type="int4" Nullable="false" />
+          <Property Name="id_region" Type="int4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="payments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="payment_value" Type="int4" Nullable="false" />
+          <Property Name="id_subscriber_tariff" Type="int4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="personal_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="address" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="passport_info" Type="varchar" MaxLength="200" />
+          <Property Name="birthday" Type="date" Nullable="false" />
+          <Property Name="sex" Type="bpchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="regions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="subscriber_tariff_list">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_tariff" Type="int4" Nullable="false" />
+          <Property Name="id_subscriber" Type="int4" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="subscribers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_personal_data" Type="int4" Nullable="false" />
+          <Property Name="full_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="telephone_number" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="id_region" Type="int4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tariffs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="minute_number" Type="int4" Nullable="false" />
+          <Property Name="sms_number" Type="int4" Nullable="false" />
+          <Property Name="price" Type="int4" Nullable="false" />
+        </EntityType>
+        <Association Name="operators_id_region_fkey">
+          <End Role="regions" Type="Self.regions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="operators" Type="Self.operators" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="regions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="operators">
+              <PropertyRef Name="id_region" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="payments_id_subscriber_tariff_fkey">
+          <End Role="subscriber_tariff_list" Type="Self.subscriber_tariff_list" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="payments" Type="Self.payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subscriber_tariff_list">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="payments">
+              <PropertyRef Name="id_subscriber_tariff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subscriber_tarif_list_id_subscriber_fkey">
+          <End Role="subscribers" Type="Self.subscribers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="subscriber_tariff_list" Type="Self.subscriber_tariff_list" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subscribers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subscriber_tariff_list">
+              <PropertyRef Name="id_subscriber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subscriber_tarif_list_id_tariff_fkey">
+          <End Role="tariffs" Type="Self.tariffs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="subscriber_tariff_list" Type="Self.subscriber_tariff_list" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tariffs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subscriber_tariff_list">
+              <PropertyRef Name="id_tariff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subscribers_id_personal_data_fkey">
+          <End Role="personal_data" Type="Self.personal_data" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="subscribers" Type="Self.subscribers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personal_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subscribers">
+              <PropertyRef Name="id_personal_data" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subscribers_id_region_fkey">
+          <End Role="regions" Type="Self.regions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="subscribers" Type="Self.subscribers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="regions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subscribers">
+              <PropertyRef Name="id_region" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище providersModelContainer">
+          <EntitySet Name="operators" EntityType="Self.operators" Schema="public" store:Type="Tables" />
+          <EntitySet Name="payments" EntityType="Self.payments" Schema="public" store:Type="Tables" />
+          <EntitySet Name="personal_data" EntityType="Self.personal_data" Schema="public" store:Type="Tables" />
+          <EntitySet Name="regions" EntityType="Self.regions" Schema="public" store:Type="Tables" />
+          <EntitySet Name="subscriber_tariff_list" EntityType="Self.subscriber_tariff_list" Schema="public" store:Type="Tables" />
+          <EntitySet Name="subscribers" EntityType="Self.subscribers" Schema="public" store:Type="Tables" />
+          <EntitySet Name="tariffs" EntityType="Self.tariffs" Schema="public" store:Type="Tables" />
+          <AssociationSet Name="operators_id_region_fkey" Association="Self.operators_id_region_fkey">
+            <End Role="regions" EntitySet="regions" />
+            <End Role="operators" EntitySet="operators" />
+          </AssociationSet>
+          <AssociationSet Name="payments_id_subscriber_tariff_fkey" Association="Self.payments_id_subscriber_tariff_fkey">
+            <End Role="subscriber_tariff_list" EntitySet="subscriber_tariff_list" />
+            <End Role="payments" EntitySet="payments" />
+          </AssociationSet>
+          <AssociationSet Name="subscriber_tarif_list_id_subscriber_fkey" Association="Self.subscriber_tarif_list_id_subscriber_fkey">
+            <End Role="subscribers" EntitySet="subscribers" />
+            <End Role="subscriber_tariff_list" EntitySet="subscriber_tariff_list" />
+          </AssociationSet>
+          <AssociationSet Name="subscriber_tarif_list_id_tariff_fkey" Association="Self.subscriber_tarif_list_id_tariff_fkey">
+            <End Role="tariffs" EntitySet="tariffs" />
+            <End Role="subscriber_tariff_list" EntitySet="subscriber_tariff_list" />
+          </AssociationSet>
+          <AssociationSet Name="subscribers_id_personal_data_fkey" Association="Self.subscribers_id_personal_data_fkey">
+            <End Role="personal_data" EntitySet="personal_data" />
+            <End Role="subscribers" EntitySet="subscribers" />
+          </AssociationSet>
+          <AssociationSet Name="subscribers_id_region_fkey" Association="Self.subscribers_id_region_fkey">
+            <End Role="regions" EntitySet="regions" />
+            <End Role="subscribers" EntitySet="subscribers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="providersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="operators">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="full_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="experience" Type="Int32" Nullable="false" />
+          <Property Name="salary" Type="Int32" Nullable="false" />
+          <Property Name="id_region" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="regions" Relationship="Self.operators_id_region_fkey" FromRole="operators" ToRole="regions" />
+        </EntityType>
+        <EntityType Name="payments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="payment_value" Type="Int32" Nullable="false" />
+          <Property Name="id_subscriber_tariff" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="subscriber_tariff_list" Relationship="Self.payments_id_subscriber_tariff_fkey" FromRole="payments" ToRole="subscriber_tariff_list" />
+        </EntityType>
+        <EntityType Name="personal_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="address" Type="String" MaxLength="8000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="passport_info" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="birthday" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="sex" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="subscribers" Relationship="Self.subscribers_id_personal_data_fkey" FromRole="personal_data" ToRole="subscribers" />
+        </EntityType>
+        <EntityType Name="regions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="operators" Relationship="Self.operators_id_region_fkey" FromRole="regions" ToRole="operators" />
+          <NavigationProperty Name="subscribers" Relationship="Self.subscribers_id_region_fkey" FromRole="regions" ToRole="subscribers" />
+        </EntityType>
+        <EntityType Name="subscriber_tariff_list">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_tariff" Type="Int32" Nullable="false" />
+          <Property Name="id_subscriber" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Precision="0" Nullable="false" />
+          <NavigationProperty Name="payments" Relationship="Self.payments_id_subscriber_tariff_fkey" FromRole="subscriber_tariff_list" ToRole="payments" />
+          <NavigationProperty Name="subscribers" Relationship="Self.subscriber_tarif_list_id_subscriber_fkey" FromRole="subscriber_tariff_list" ToRole="subscribers" />
+          <NavigationProperty Name="tariffs" Relationship="Self.subscriber_tarif_list_id_tariff_fkey" FromRole="subscriber_tariff_list" ToRole="tariffs" />
+        </EntityType>
+        <EntityType Name="subscribers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_personal_data" Type="Int32" Nullable="false" />
+          <Property Name="full_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="telephone_number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_region" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="personal_data" Relationship="Self.subscribers_id_personal_data_fkey" FromRole="subscribers" ToRole="personal_data" />
+          <NavigationProperty Name="regions" Relationship="Self.subscribers_id_region_fkey" FromRole="subscribers" ToRole="regions" />
+          <NavigationProperty Name="subscriber_tariff_list" Relationship="Self.subscriber_tarif_list_id_subscriber_fkey" FromRole="subscribers" ToRole="subscriber_tariff_list" />
+        </EntityType>
+        <EntityType Name="tariffs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="minute_number" Type="Int32" Nullable="false" />
+          <Property Name="sms_number" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="subscriber_tariff_list" Relationship="Self.subscriber_tarif_list_id_tariff_fkey" FromRole="tariffs" ToRole="subscriber_tariff_list" />
+        </EntityType>
+        <Association Name="operators_id_region_fkey">
+          <End Role="regions" Type="Self.regions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="operators" Type="Self.operators" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="regions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="operators">
+              <PropertyRef Name="id_region" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="payments_id_subscriber_tariff_fkey">
+          <End Role="subscriber_tariff_list" Type="Self.subscriber_tariff_list" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="payments" Type="Self.payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subscriber_tariff_list">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="payments">
+              <PropertyRef Name="id_subscriber_tariff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subscribers_id_personal_data_fkey">
+          <End Role="personal_data" Type="Self.personal_data" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="subscribers" Type="Self.subscribers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personal_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subscribers">
+              <PropertyRef Name="id_personal_data" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subscribers_id_region_fkey">
+          <End Role="regions" Type="Self.regions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="subscribers" Type="Self.subscribers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="regions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subscribers">
+              <PropertyRef Name="id_region" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subscriber_tarif_list_id_subscriber_fkey">
+          <End Role="subscribers" Type="Self.subscribers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="subscriber_tariff_list" Type="Self.subscriber_tariff_list" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subscribers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subscriber_tariff_list">
+              <PropertyRef Name="id_subscriber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subscriber_tarif_list_id_tariff_fkey">
+          <End Role="tariffs" Type="Self.tariffs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="subscriber_tariff_list" Type="Self.subscriber_tariff_list" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tariffs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subscriber_tariff_list">
+              <PropertyRef Name="id_tariff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="providersEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="operators" EntityType="Self.operators" />
+          <EntitySet Name="payments" EntityType="Self.payments" />
+          <EntitySet Name="personal_data" EntityType="Self.personal_data" />
+          <EntitySet Name="regions" EntityType="Self.regions" />
+          <EntitySet Name="subscriber_tariff_list" EntityType="Self.subscriber_tariff_list" />
+          <EntitySet Name="subscribers" EntityType="Self.subscribers" />
+          <EntitySet Name="tariffs" EntityType="Self.tariffs" />
+          <AssociationSet Name="operators_id_region_fkey" Association="Self.operators_id_region_fkey">
+            <End Role="regions" EntitySet="regions" />
+            <End Role="operators" EntitySet="operators" />
+          </AssociationSet>
+          <AssociationSet Name="payments_id_subscriber_tariff_fkey" Association="Self.payments_id_subscriber_tariff_fkey">
+            <End Role="subscriber_tariff_list" EntitySet="subscriber_tariff_list" />
+            <End Role="payments" EntitySet="payments" />
+          </AssociationSet>
+          <AssociationSet Name="subscribers_id_personal_data_fkey" Association="Self.subscribers_id_personal_data_fkey">
+            <End Role="personal_data" EntitySet="personal_data" />
+            <End Role="subscribers" EntitySet="subscribers" />
+          </AssociationSet>
+          <AssociationSet Name="subscribers_id_region_fkey" Association="Self.subscribers_id_region_fkey">
+            <End Role="regions" EntitySet="regions" />
+            <End Role="subscribers" EntitySet="subscribers" />
+          </AssociationSet>
+          <AssociationSet Name="subscriber_tarif_list_id_subscriber_fkey" Association="Self.subscriber_tarif_list_id_subscriber_fkey">
+            <End Role="subscribers" EntitySet="subscribers" />
+            <End Role="subscriber_tariff_list" EntitySet="subscriber_tariff_list" />
+          </AssociationSet>
+          <AssociationSet Name="subscriber_tarif_list_id_tariff_fkey" Association="Self.subscriber_tarif_list_id_tariff_fkey">
+            <End Role="tariffs" EntitySet="tariffs" />
+            <End Role="subscriber_tariff_list" EntitySet="subscriber_tariff_list" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище providersModelContainer" CdmEntityContainer="providersEntities">
+          <EntitySetMapping Name="operators">
+            <EntityTypeMapping TypeName="providersModel.operators">
+              <MappingFragment StoreEntitySet="operators">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="experience" ColumnName="experience" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="id_region" ColumnName="id_region" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payments">
+            <EntityTypeMapping TypeName="providersModel.payments">
+              <MappingFragment StoreEntitySet="payments">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="payment_value" ColumnName="payment_value" />
+                <ScalarProperty Name="id_subscriber_tariff" ColumnName="id_subscriber_tariff" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personal_data">
+            <EntityTypeMapping TypeName="providersModel.personal_data">
+              <MappingFragment StoreEntitySet="personal_data">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="passport_info" ColumnName="passport_info" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="regions">
+            <EntityTypeMapping TypeName="providersModel.regions">
+              <MappingFragment StoreEntitySet="regions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subscriber_tariff_list">
+            <EntityTypeMapping TypeName="providersModel.subscriber_tariff_list">
+              <MappingFragment StoreEntitySet="subscriber_tariff_list">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_tariff" ColumnName="id_tariff" />
+                <ScalarProperty Name="id_subscriber" ColumnName="id_subscriber" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subscribers">
+            <EntityTypeMapping TypeName="providersModel.subscribers">
+              <MappingFragment StoreEntitySet="subscribers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_personal_data" ColumnName="id_personal_data" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="telephone_number" ColumnName="telephone_number" />
+                <ScalarProperty Name="id_region" ColumnName="id_region" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tariffs">
+            <EntityTypeMapping TypeName="providersModel.tariffs">
+              <MappingFragment StoreEntitySet="tariffs">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="minute_number" ColumnName="minute_number" />
+                <ScalarProperty Name="sms_number" ColumnName="sms_number" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

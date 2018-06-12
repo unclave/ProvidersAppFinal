@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ProvidersApp.Models.payments>
+
+@{
+    ViewBag.Title = "Платежи";
+}
+
+@using (Html.BeginForm("Index", "Payments", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-10">
+            <label for="query">
+                <input type="text" name="search" class="form-control" />
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Найти" class="btn btn-default" />
+        </div>
+    </div>
+}
+<br>
+
+<p>
+    @Html.ActionLink("Создать запись", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Дата
+        </th>
+        <th>
+            Сумма платежа
+        </th>
+        <th>
+            Код записи списка подключений
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.payment_value)
+        </td>
+        <td>
+            @Html.ActionLink(Html.DisplayFor(modelItem => item.subscriber_tariff_list.id).ToString(), "Details", "Subscriber_tariff_list", new { id = item.id_subscriber_tariff }, null)
+        </td>
+        <td>
+            @Html.ActionLink("Изменить", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Подробно", "Details", new { id=item.id }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ProvidersApp.Classes.Query4Data>
+
+@{
+    ViewBag.Title = "Результаты запроса";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            ФИО
+        </th>
+        <th>
+            Название
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @item.full_name
+        </td>
+        <td>
+            @item.name
+        </td>
+    </tr>
+    }
+</table>
